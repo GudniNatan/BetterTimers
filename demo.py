@@ -6,13 +6,11 @@ import os
 import threading
 
 
-
-
 genericEvent = USEREVENT + 1
 randomEvent = USEREVENT + 2
 
-window_size = window_width, window_height = 1280, 720
 pygame.init()
+window_size = window_width, window_height = 1280, 720
 screen = pygame.display.set_mode(window_size, pygame.DOUBLEBUF)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Better timer demo')
@@ -34,7 +32,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == K_ESCAPE):
             running = False
-            timers.end_all_timers() #We stop all the timers
+            timers.end_all_timers() #We stop all the timers to be able to exit safely
             pygame.quit()
             break
         if event.type == randomEvent:

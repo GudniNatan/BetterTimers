@@ -25,8 +25,11 @@ class Timer(object):
                 e.post(e.Event(event))
             self.ok.clear()
             goThread = threading.Timer(float(rate) / 1000.0, go)
+            goThread.daemon = True
             goThread.start()
             self.ok.wait()
+            if goThread.is_alive() and self.running:
+                goThread.join()
 
     def start_timer(self):
         self.running = True
