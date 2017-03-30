@@ -17,7 +17,7 @@ screen = pygame.display.set_mode(window_size, pygame.DOUBLEBUF)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Better timer demo')
 
-timers = BetterTimers()
+timers = BetterTimers() #You need to define the BetterTimers object
 
 
 timers.set_timer(pygame.event.Event(genericEvent, code="cool"), 500)
