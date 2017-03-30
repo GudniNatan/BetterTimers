@@ -5,7 +5,6 @@ import sys
 import os
 import threading
 
-
 genericEvent = USEREVENT + 1
 randomEvent = USEREVENT + 2
 
@@ -28,8 +27,8 @@ timers.set_timer(randomEvent, 0) #Timer stopped
 
 running = True
 
-while running:
-    for event in pygame.event.get():
+while running: # Game loop
+    for event in pygame.event.get(): #Event handling
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == K_ESCAPE):
             running = False
             timers.end_all_timers() #We stop all the timers to be able to exit safely
