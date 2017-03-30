@@ -18,11 +18,8 @@ class Timer(object):
     def eventPoster(self, event, rate):
         e = pygame.event
         go = self.go
-        while self.running:
-            if type(event) is e.EventType:
-                e.post(event)
-            else:
-                e.post(e.Event(event))
+
+        def wait(rate):
             self.ok.clear()
             goThread = threading.Timer(float(rate) / 1000.0, go)
             goThread.daemon = True
@@ -30,6 +27,14 @@ class Timer(object):
             self.ok.wait()
             if goThread.is_alive() and self.running:
                 goThread.join()
+
+        wait(rate)
+        while self.running:
+            if type(event) is e.EventType:
+                e.post(event)
+            else:
+                e.post(e.Event(event))
+            wait(rate)
 
     def start_timer(self):
         self.running = True
