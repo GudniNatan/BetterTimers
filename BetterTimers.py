@@ -28,13 +28,13 @@ class Timer(object):
             if goThread.is_alive() and self.running:
                 goThread.join()
 
-        wait(rate)
+        wait(self.rate)
         while self.running:
             if type(event) is e.EventType:
                 e.post(event)
             else:
                 e.post(e.Event(event))
-            wait(rate)
+            wait(self.rate)
 
     def start_timer(self):
         self.running = True
