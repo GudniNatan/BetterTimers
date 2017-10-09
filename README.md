@@ -41,10 +41,6 @@ timers.set_timer(randomEvent, 5000) # Traditional timer set with USEREVENT
 timers.set_timer(randomEvent, 0) # Timer stopped
 ```
 
-You can even start the timer off with a delay.
-Just use it like this:
-
-
 You will recieve these events in the pygame event queue just as you would expect.
 
 	while True:
