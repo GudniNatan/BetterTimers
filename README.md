@@ -51,6 +51,11 @@ You will recieve these events in the pygame event queue just as you would expect
 	            print("How cool!")
 	    ...
 
+You can also stop all the timers with this neat shortcut. Please be sure to stop all timers before exiting the program:
+
+	timers.end_all_timers()
+	
+
 ## Compatability
 
 BetterTimers.py is compatible with both python 2 & 3.
