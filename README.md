@@ -53,8 +53,8 @@ You will recieve these events in the pygame event queue just as you would expect
 
 ## Compatability
 
-BetterTimers.py is compatable with both python 2 & 3.
+BetterTimers.py is compatible with both python 2 & 3.
 
 ## Dependencies
 
-BetterTimers.py is dependant on pygame.
+BetterTimers.py is dependant on [pygame](http://www.pygame.org).
