@@ -16,10 +16,12 @@ pygame.display.set_caption('Better timer demo')
 
 timers = BetterTimers() #You need to define the BetterTimers object
 
+coolEvent = pygame.event.Event(genericEvent, code="cool")
+uncoolEvent = pygame.event.Event(genericEvent, code="uncool")
 
-timers.set_timer(pygame.event.Event(genericEvent, code="cool"), 500) # Sets a timer for 500 milliseconds
-timers.set_timer(pygame.event.Event(genericEvent, code="uncool"), 1000) # New genericEvent timer with a different code
-timers.set_timer(pygame.event.Event(genericEvent, code="cool"), 2000) # Overrides old 500 rate timer
+timers.set_timer(coolEvent, 500) # Sets a timer for 500 milliseconds
+timers.set_timer(uncoolEvent, 1000) # New genericEvent timer with a different code
+timers.set_timer(coolEvent, 2000, 300) # Overrides old 500 rate timer, with delay
 
 timers.set_timer(randomEvent, 5000) # Traditional timer set where there are no extra arguments
 timers.set_timer(randomEvent, 0) #Timer stopped
@@ -36,7 +38,7 @@ while running: # Game loop
             break
         if event.type == randomEvent:
             print("WOWZERS")
-        if event.type == genericEvent and event.code == 'cool':
+        if event == coolEvent:
             print("COOL EVENT")
         if event.type == genericEvent and event.code == 'uncool':
             print("SO UNCOOL")

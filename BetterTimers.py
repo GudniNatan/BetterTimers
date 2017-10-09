@@ -9,26 +9,29 @@ class Timer(object):
         self.running = False
         self.event = event
         self.rate = rate
-        self.t = Thread(target=self.eventPoster, args=(event, rate))
-        self.t.daemon = True
+        self.t = None
 
     def eventPoster(self, event, rate):
         e = pyEvent
-        def post(event, rate):
-            if self.running:
+        def post(event):
+            if self.running and self.rate == rate:
                 if type(event) is e.EventType:
                     e.post(event)
                 else:
                     e.post(e.Event(event))
-                goThread.run()
+                postThread.run()
+                postThread.daemon = True
 
-        goThread = threadTimer(float(rate - 1) / 1000.0, post, args=(event, rate,))
-        goThread.daemon = True
-        goThread.start()
+        postThread = threadTimer(float(rate - 1) / 1000.0, post, args=(event,))
+        postThread.daemon = True
+        postThread.start()
 
     def start_timer(self):
-        self.running = True
-        self.t.start()
+        if not self.running:
+            self.t = Thread(target=self.eventPoster, args=(self.event, self.rate))
+            self.t.daemon = True
+            self.running = True
+            self.t.start()
 
     def stop_timer(self):
         if self.running:
@@ -38,6 +41,9 @@ class Timer(object):
     def change_rate(self, rate):
         self.rate = rate
 
+        self.stop_timer()
+        self.start_timer()
+
 class BetterTimers():
     def __init__(self):
         self.timers = list()
@@ -45,10 +51,9 @@ class BetterTimers():
     def delayedEventHandling(self, event, rate):
         self.set_timer(event, rate)
 
-
     def set_timer(self, event, rate, delay=0):
         if floor(delay) > 0:
-            delayTimer = threadTimer(delay-1, self.delayedEventHandling, args=(event, rate,))
+            delayTimer = threadTimer(float(delay - 1) / 1000.0, self.delayedEventHandling, args=(event, rate))
             delayTimer.daemon = True
             delayTimer.start()
             return
