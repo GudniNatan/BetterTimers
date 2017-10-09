@@ -9,15 +9,16 @@ https://gudninathan.blogspot.is/2017/05/pygame-og-events-1-genericevent.html
 ## Quick start
 
 Import timer manager
-```from BetterTimers import timers```
+```
+from BetterTimers import timers
+```
 
-* OR *
+__OR__
 
 Create a new timer manager
 ```
 from BetterTimers import BetterTimers
 timers = BetterTimers()
-
 ```
 
 Add new timers that will automatically go to the event queue repeatedly, every N milliseconds. You can pass in both the regular USEREVENT types or create your own `pygame.event.Event` with any custom args and kwargs for unlimited possibilities. Override already established timers easily, or delete them entirely by passing in a rate of 0 or less.
