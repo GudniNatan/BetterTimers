@@ -1,9 +1,9 @@
 import pygame
 from pygame.locals import *
 from BetterTimers import BetterTimers
-import sys
-import os
-import threading
+
+# Alternatively:
+# from BetterTimers import timers as myTimers
 
 genericEvent = USEREVENT + 1
 randomEvent = USEREVENT + 2
