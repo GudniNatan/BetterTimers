@@ -21,7 +21,9 @@ from BetterTimers import BetterTimers
 timers = BetterTimers()
 ```
 
-Add new timers that will automatically go to the event queue repeatedly, every N milliseconds. You can pass in both the regular USEREVENT types or create your own `pygame.event.Event` with any custom args and kwargs for unlimited possibilities. Override already established timers easily, or delete them entirely by passing in a rate of 0 or less.
+Add new timers that will automatically go to the event queue repeatedly, every N milliseconds using this format.  
+`timers.set_timer(event, ms, delay_ms)`  
+You can pass in both the regular USEREVENT types or create your own `pygame.event.Event` with any custom args and kwargs for unlimited possibilities. Override already established timers easily, or delete them entirely by passing in a rate of 0 or less.
 
 ```
 genericEvent = USEREVENT + 1
@@ -41,7 +43,6 @@ timers.set_timer(randomEvent, 0) # Timer stopped
 
 You can even start the timer off with a delay.
 Just use it like this:
-`timers.set_timer(event, ms, delay_ms)`
 
 
 You will recieve these events in the pygame event queue just as you would expect.
