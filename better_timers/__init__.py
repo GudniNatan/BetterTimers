@@ -1,5 +1,8 @@
 from threading import Thread, Timer as threadTimer
 from pygame import event as pyEvent, register_quit
+from pygame.fastevent import post as post_event
+from pygame.fastevent import init as fastevent_init
+from pygame import init as pygame_init
 from math import floor
 
 # By Gudni Natan Gunnarsson, 2017
@@ -14,17 +17,17 @@ class Timer(object):
         self.__event = event
         self.__rate = rate
         self.__t = None
+        fastevent_init()
 
     def _eventPoster(self, event, rate):
         '''Posts events at the specified rate via a threadTimer.'''
         e = pyEvent
+        if type(event) is not e.EventType:
+            event = e.Event(event)
 
         def post(event):
             if self.__running:
-                if type(event) is e.EventType:
-                    e.post(event)
-                else:
-                    e.post(e.Event(event))
+                post_event(event)
                 postThread.run()
                 if not postThread.daemon:
                     postThread.daemon = True
@@ -67,7 +70,9 @@ class BetterTimers():
     def __init__(self):
         '''Makes a BetterTimers object. Call pygame.quit to end all timers.'''
         self.__timers = list()
+        pygame_init()
         register_quit(self.end_all_timers)
+        fastevent_init()
 
     def set_timer(self, event, rate, delay=0):
         '''Sets a timer for an event. Each event object will only have one

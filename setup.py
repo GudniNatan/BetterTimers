@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="better_timers-gudninatan",
-    version="0.0.2",
+    version="0.0.3",
     author="Guðni Natan Gunnarsson",
     author_email="author@example.com",
     description="Better timers for pygame",
