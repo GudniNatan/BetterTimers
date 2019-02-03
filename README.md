@@ -8,16 +8,22 @@ https://gudninathan.blogspot.is/2017/05/pygame-og-events-1-genericevent.html
 
 ## Quick start
 
+Start by downloading the package!
+```
+$ pip install better_timers-gudninatan
+```
+
+
 Import timer manager
 ```
-from BetterTimers import timers
+from better_timers import timers
 ```
 
 __OR__
 
 Create a new timer manager
 ```
-from BetterTimers import BetterTimers
+from better_timers import BetterTimers
 timers = BetterTimers()
 ```
 
