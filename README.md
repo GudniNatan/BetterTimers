@@ -10,6 +10,7 @@ https://gudninathan.blogspot.is/2017/05/pygame-og-events-1-genericevent.html
 
 Start by downloading the package!
 ```
+$ pip install pygame
 $ pip install better_timers-gudninatan
 ```
 
@@ -64,8 +65,8 @@ All timers will be stopped upon calling `pygame.quit()`. You can also stop all t
 
 ## Compatability
 
-BetterTimers.py is compatible with both python 2 & 3.
+better_timers is compatible with both python 2 & 3.
 
 ## Dependencies
 
-BetterTimers.py is dependant on [pygame](http://www.pygame.org).
+better_timers is dependant on [pygame](http://www.pygame.org).
