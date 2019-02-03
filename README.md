@@ -51,7 +51,7 @@ You will recieve these events in the pygame event queue just as you would expect
 	            print("How cool!")
 	    ...
 
-You can also stop all the timers with this neat shortcut. Please be sure to stop all timers before exiting the program:
+All timers will be stopped upon calling `pygame.quit()`. You can also stop all the timers with this neat shortcut:
 
 	timers.end_all_timers()
 	
