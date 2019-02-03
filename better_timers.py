@@ -1,80 +1,92 @@
 from threading import Thread, Timer as threadTimer
-from pygame import event as pyEvent
+from pygame import event as pyEvent, register_quit
 from math import floor
 
 # By Gudni Natan Gunnarsson, 2017
 
+
 class Timer(object):
     def __init__(self, event, rate):
-        self.running = False
-        self.event = event
-        self.rate = rate
-        self.t = None
+        self.__running = False
+        self.__event = event
+        self.__rate = rate
+        self.__t = None
 
     def eventPoster(self, event, rate):
         e = pyEvent
+
         def post(event):
-            if self.running and self.rate == rate:
+            if self.__running and self.__rate == rate:
                 if type(event) is e.EventType:
                     e.post(event)
                 else:
                     e.post(e.Event(event))
                 postThread.run()
-                postThread.daemon = True
+                if not postThread.daemon:
+                    postThread.daemon = True
 
         postThread = threadTimer(float(rate - 1) / 1000.0, post, args=(event,))
         postThread.daemon = True
         postThread.start()
 
     def start_timer(self):
-        if not self.running:
-            self.t = Thread(target=self.eventPoster, args=(self.event, self.rate))
-            self.t.daemon = True
-            self.running = True
-            self.t.start()
+        if not self.__running:
+            self.__t = Thread(
+                target=self.eventPoster,
+                args=(self.__event, self.__rate)
+            )
+            self.__t.daemon = True
+            self.__running = True
+            self.__t.start()
 
     def stop_timer(self):
-        if self.running:
-            self.running = False
-            self.t.join()
+        if self.__running:
+            self.__running = False
+            self.__t.join()
 
     def change_rate(self, rate):
-        self.rate = rate
+        self.__rate = rate
 
         self.stop_timer()
         self.start_timer()
 
+    def get_event(self):
+        return self.__event
+
+
 class BetterTimers():
     def __init__(self):
-        self.timers = list()
-
-    def delayedEventHandling(self, event, rate):
-        self.set_timer(event, rate)
+        self.__timers = list()
+        register_quit(self.end_all_timers)
 
     def set_timer(self, event, rate, delay=0):
         if floor(delay) > 0:
-            delayTimer = threadTimer(float(delay - 1) / 1000.0, self.delayedEventHandling, args=(event, rate))
+            delayTimer = threadTimer(
+                float(delay - 1) / 1000.0,
+                self.set_timer,
+                args=(event, rate)
+            )
             delayTimer.daemon = True
             delayTimer.start()
             return
 
         t = Timer(event, rate)
-        for e in self.timers:
-            if e.event == event:
+        for e in self.__timers:
+            if e.get_event() == event:
                 if floor(rate) > 0:
                     e.change_rate(rate)
                 else:
                     e.stop_timer()
-                    self.timers.remove(e)
+                    self.__timers.remove(e)
                 return
         if floor(rate) > 0:
             t.start_timer()
-            self.timers.append(t)
+            self.__timers.append(t)
 
     def end_all_timers(self):
-        for t in self.timers:
+        for t in self.__timers:
             t.stop_timer()
 
-        self.timers = list()
+        self.__timers = list()
 
 timers = BetterTimers()
